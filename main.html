@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mystical Crystal Ball Fortune</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at bottom, #232526 0%, #090a0f 100%);
+      overflow: hidden;
+      font-family: 'Quicksand', Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .stars {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .crystal-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      z-index: 2;
+    }
+    .crystal-ball {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 60% 40%, #b3e5fc 0%, #512da8 80%, #000 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 60px 20px #7c4dff, 0 0 200px 60px #311b92 inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: box-shadow 0.3s;
+      animation: glow 3s infinite alternate;
+    }
+    .crystal-ball:after {
+      content: '';
+      position: absolute;
+      top: 30px; left: 60px;
+      width: 40px; height: 40px;
+      background: radial-gradient(circle, #fff8 0%, #fff0 80%);
+      border-radius: 50%;
+      filter: blur(2px);
+      opacity: 0.7;
+    }
+    .crystal-ball.shake {
+      animation: shake 0.5s;
+    }
+    .crystal-ball.glow {
+      box-shadow: 0 0 100px 40px #fff, 0 0 200px 80px #7c4dff inset;
+      animation: glow 0.5s infinite alternate;
+    }
+    @keyframes shake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-10px, 2px) rotate(-5deg); }
+      40% { transform: translate(10px, -2px) rotate(5deg); }
+      60% { transform: translate(-6px, 2px) rotate(-3deg); }
+      80% { transform: translate(6px, -2px) rotate(3deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 60px 20px #7c4dff, 0 0 200px 60px #311b92 inset; }
+      to { box-shadow: 0 0 100px 40px #fff, 0 0 200px 80px #7c4dff inset; }
+    }
+    .base {
+      width: 120px;
+      height: 40px;
+      background: linear-gradient(90deg, #333 0%, #7c4dff 100%);
+      border-radius: 0 0 60px 60px;
+      margin-top: -20px;
+      box-shadow: 0 10px 30px #000a;
+      z-index: 1;
+    }
+    .fortune {
+      margin-top: 40px;
+      min-height: 60px;
+      font-size: 1.5rem;
+      text-align: center;
+      color: #ffe082;
+      text-shadow: 0 0 10px #7c4dff, 0 0 2px #000;
+      opacity: 0;
+      transition: opacity 0.5s;
+      z-index: 2;
+    }
+    .fortune.visible {
+      opacity: 1;
+    }
+    .toggle-mode {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      background: #222;
+      color: #ffe082;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #000a;
+      z-index: 10;
+      transition: background 0.3s, color 0.3s;
+    }
+    .toggle-mode.day {
+      background: #ffe082;
+      color: #222;
+    }
+    body.day {
+      background: linear-gradient(ellipse at top, #fffde4 0%, #b3c6e4 100%);
+      color: #222;
+    }
+    body.day .fortune {
+      color: #512da8;
+      text-shadow: 0 0 10px #ffe082, 0 0 2px #fff;
+    }
+    body.day .history {
+      background: rgba(255, 255, 255, 0.7);
+      color: #512da8;
+    }
+    body.day .crystal-ball {
+      background: radial-gradient(circle at 60% 40%, #fffde4 0%, #b3c6e4 80%, #512da8 100%);
+      box-shadow: 0 0 60px 20px #ffe082, 0 0 200px 60px #b3c6e4 inset;
+    }
+    body.day .crystal-ball:after {
+      background: radial-gradient(circle, #fff8 0%, #fff0 80%);
+    }
+    /* Smoke effect */
+    .smoke {
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 120px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .smoke span {
+      position: absolute;
+      bottom: 0;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, #fff3 0%, #fff0 80%);
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: smoke 6s linear infinite;
+    }
+    .smoke span:nth-child(1) { left: 20px; animation-delay: 0s; }
+    .smoke span:nth-child(2) { left: 80px; animation-delay: 1.5s; }
+    .smoke span:nth-child(3) { left: 160px; animation-delay: 3s; }
+    .smoke span:nth-child(4) { left: 220px; animation-delay: 2s; }
+    .smoke span:nth-child(5) { left: 120px; animation-delay: 4s; }
+    @keyframes smoke {
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
+      60% { opacity: 0.3; }
+      100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-mode" id="toggleMode">🌙 Night</button>
+  <canvas class="stars" id="stars"></canvas>
+  <div class="crystal-container">
+    <div class="crystal-ball" id="crystalBall" title="Click to reveal your fortune!"></div>
+    <div class="base"></div>
+    <div class="smoke">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="fortune" id="fortune"></div>
+  </div>
+  <audio id="whoosh" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae3e2.mp3" preload="auto"></audio>
+  <audio id="ambient" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae3e2.mp3" preload="auto" loop></audio>
+  <script>
+    // Star field
+    const starCanvas = document.getElementById('stars');
+    const ctx = starCanvas.getContext('2d');
+    function resizeStars() {
+      starCanvas.width = window.innerWidth;
+      starCanvas.height = window.innerHeight;
+    }
+    function drawStars() {
+      ctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+      for (let i = 0; i < 180; i++) {
+        const x = Math.random() * starCanvas.width;
+        const y = Math.random() * starCanvas.height;
+        const r = Math.random() * 1.2 + 0.2;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.fillStyle = 'rgba(255,255,255,' + (Math.random() * 0.7 + 0.3) + ')';
+        ctx.fill();
+      }
+    }
+    resizeStars();
+    drawStars();
+    window.addEventListener('resize', () => {
+      resizeStars();
+      drawStars();
+    });
+    setInterval(drawStars, 3000);
+
+    // Fortunes
+    const fortunes = [
+      "Your destiny is being updated. Please stand by...",
+      "A great opportunity will soon fall into your lap.",
+      "Beware the man with two phones.",
+      "You will debug a bug that doesn't exist.",
+      "They're watching you. Just smile.",
+      "A mysterious stranger will change your life.",
+      "You will find what you seek in the least expected place.",
+      "The answer is hidden in plain sight.",
+      "A secret will soon be revealed.",
+      "You will soon receive a cryptic message.",
+      "Trust your intuition, but not your memory.",
+      "The stars are aligning in your favor.",
+      "A shadow from your past returns.",
+      "You will laugh at an unexpected moment.",
+      "A journey you start will not end as you expect.",
+      "You will meet someone who knows your name.",
+      "The number 7 will be important to you soon.",
+      "You will find a coin. Pick it up.",
+      "A dream you have will come true.",
+      "You will soon forget why you walked into the room.",
+      "A glitch in the matrix is coming.",
+      "You will hear your favorite song soon.",
+      "Someone is thinking of you right now.",
+      "You will soon have a déjà vu.",
+      "The next fortune is false. The previous fortune is true."
+    ];
+    let lastFortune = '';
+
+    // Elements
+    const crystalBall = document.getElementById('crystalBall');
+    const fortuneDiv = document.getElementById('fortune');
+    const whoosh = document.getElementById('whoosh');
+    const ambient = document.getElementById('ambient');
+    let isDay = false;
+
+    // Crystal Ball SVG
+    crystalBall.innerHTML = `
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff" stop-opacity="0.8"/>
+            <stop offset="60%" stop-color="#b3e5fc" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#7c4dff" stop-opacity="0.9"/>
+          </radialGradient>
+        </defs>
+        <circle cx="90" cy="90" r="80" fill="url(#glow)"/>
+        <ellipse cx="90" cy="110" rx="60" ry="30" fill="#fff3"/>
+        <ellipse cx="70" cy="70" rx="12" ry="8" fill="#fff8"/>
+      </svg>
+    `;
+
+    // Ambient sound
+    ambient.volume = 0.15;
+    ambient.play().catch(()=>{});
+
+    // Toggle day/night mode
+    toggleMode.addEventListener('click', () => {
+      isDay = !isDay;
+      document.body.classList.toggle('day', isDay);
+      toggleMode.textContent = isDay ? '☀️ Day' : '🌙 Night';
+    });
+
+    // Show fortune
+    function showFortune() {
+      let fortune;
+      do {
+        fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+      } while (fortune === lastFortune && fortunes.length > 1);
+      lastFortune = fortune;
+      fortuneDiv.textContent = '';
+      fortuneDiv.classList.remove('visible');
+      crystalBall.classList.add('shake');
+      crystalBall.classList.add('glow');
+      whoosh.currentTime = 0;
+      whoosh.play();
+      setTimeout(() => {
+        fortuneDiv.textContent = fortune;
+        fortuneDiv.classList.add('visible');
+        crystalBall.classList.remove('shake');
+        crystalBall.classList.remove('glow');
+        // Speech synthesis
+        if ('speechSynthesis' in window) {
+          const utter = new SpeechSynthesisUtterance(fortune);
+          utter.rate = 1.05;
+          utter.pitch = 1.1;
+          utter.volume = 0.7;
+          utter.voice = speechSynthesis.getVoices().find(v => v.lang.startsWith('en')) || null;
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(utter);
+        }
+      }, 1200);
+    }
+    crystalBall.addEventListener('click', showFortune);
+    // Initial fortune
+    setTimeout(showFortune, 1200);
+  </script>
+</body>
+</html>

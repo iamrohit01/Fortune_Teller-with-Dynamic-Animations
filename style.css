@@ -1,0 +1,163 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at bottom, #232526 0%, #090a0f 100%);
+  overflow: hidden;
+  font-family: 'Quicksand', Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.stars {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.crystal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  z-index: 2;
+}
+.crystal-ball {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle at 60% 40%, #b3e5fc 0%, #512da8 80%, #000 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 60px 20px #7c4dff, 0 0 200px 60px #311b92 inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  animation: glow 3s infinite alternate;
+  font-family: 'Cinzel Decorative', cursive, serif;
+  letter-spacing: 1px;
+}
+.crystal-ball:after {
+  content: '';
+  position: absolute;
+  top: 30px; left: 60px;
+  width: 40px; height: 40px;
+  background: radial-gradient(circle, #fff8 0%, #fff0 80%);
+  border-radius: 50%;
+  filter: blur(2px);
+  opacity: 0.7;
+}
+.crystal-ball.shake {
+  animation: shake 0.5s;
+}
+.crystal-ball.glow {
+  box-shadow: 0 0 100px 40px #fff, 0 0 200px 80px #7c4dff inset;
+  animation: glow 0.5s infinite alternate;
+}
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-10px, 2px) rotate(-5deg); }
+  40% { transform: translate(10px, -2px) rotate(5deg); }
+  60% { transform: translate(-6px, 2px) rotate(-3deg); }
+  80% { transform: translate(6px, -2px) rotate(3deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes glow {
+  from { box-shadow: 0 0 60px 20px #7c4dff, 0 0 200px 60px #311b92 inset; }
+  to { box-shadow: 0 0 100px 40px #fff, 0 0 200px 80px #7c4dff inset; }
+}
+.base {
+  width: 120px;
+  height: 40px;
+  background: linear-gradient(90deg, #333 0%, #7c4dff 100%);
+  border-radius: 0 0 60px 60px;
+  margin-top: -20px;
+  box-shadow: 0 10px 30px #000a;
+  z-index: 1;
+  font-family: 'Quicksand', Arial, sans-serif;
+}
+.fortune {
+  margin-top: 40px;
+  min-height: 60px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ffe082;
+  text-shadow: 0 0 10px #7c4dff, 0 0 2px #000;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 2;
+  font-family: 'Quicksand', Arial, sans-serif;
+}
+.fortune.visible {
+  opacity: 1;
+}
+.toggle-mode {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: #222;
+  color: #ffe082;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #000a;
+  z-index: 10;
+  transition: background 0.3s, color 0.3s;
+  font-family: 'Quicksand', Arial, sans-serif;
+}
+.toggle-mode.day {
+  background: #ffe082;
+  color: #222;
+}
+body.day {
+  background: linear-gradient(ellipse at top, #fffde4 0%, #b3c6e4 100%);
+  color: #222;
+}
+body.day .fortune {
+  color: #512da8;
+  text-shadow: 0 0 10px #ffe082, 0 0 2px #fff;
+}
+body.day .crystal-ball {
+  background: radial-gradient(circle at 60% 40%, #fffde4 0%, #b3c6e4 80%, #512da8 100%);
+  box-shadow: 0 0 60px 20px #ffe082, 0 0 200px 60px #b3c6e4 inset;
+}
+body.day .crystal-ball:after {
+  background: radial-gradient(circle, #fff8 0%, #fff0 80%);
+}
+.smoke {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 120px;
+  pointer-events: none;
+  z-index: 1;
+}
+.smoke span {
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #fff3 0%, #fff0 80%);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: smoke 6s linear infinite;
+}
+.smoke span:nth-child(1) { left: 20px; animation-delay: 0s; }
+.smoke span:nth-child(2) { left: 80px; animation-delay: 1.5s; }
+.smoke span:nth-child(3) { left: 160px; animation-delay: 3s; }
+.smoke span:nth-child(4) { left: 220px; animation-delay: 2s; }
+.smoke span:nth-child(5) { left: 120px; animation-delay: 4s; }
+@keyframes smoke {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  60% { opacity: 0.3; }
+  100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
+} 
