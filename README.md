@@ -25,6 +25,3 @@ Open `index.html` in your browser. No build step required.
 - `README.md` — This file
 - `LICENSE` — License info
 - `.gitignore` — Standard ignores
-
-## Credits
-- **Fonts:** [Cinzel Decorative](https://fonts.google.com/specimen/Cinzel+Decorative), [Quicksand](https://fonts.google.com/specimen/Quicksand)
