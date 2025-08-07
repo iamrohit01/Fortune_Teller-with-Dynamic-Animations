@@ -27,7 +27,4 @@ Open `index.html` in your browser. No build step required.
 - `.gitignore` — Standard ignores
 
 ## Credits
-- **Fonts:** [Cinzel Decorative](https://fonts.google.com/specimen/Cinzel+Decorative), [Quicksand](https://fonts.google.com/specimen/Quicksand) via Google Fonts
-- **Sound:** [Pixabay Free Sounds](https://pixabay.com/sound-effects/
----
-Enjoy your mystical fortunes! ✨🔮 
+- **Fonts:** [Cinzel Decorative](https://fonts.google.com/specimen/Cinzel+Decorative), [Quicksand](https://fonts.google.com/specimen/Quicksand)
