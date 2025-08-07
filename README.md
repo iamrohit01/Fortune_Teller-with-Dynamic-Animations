@@ -5,7 +5,7 @@ A visually enchanting web app where users click a magical crystal ball to reveal
 ## Features
 - Mystical, animated crystal ball with glowing and shaking effects
 - Dark starry background with animated smoke
-- 25+ unique, random fortunes (wise, weird, funny, or creepy)
+- 25+ unique, random fortunes 
 - Sound effects and ambient background music
 - Optional voice output 
 - Day/Night mode toggle
