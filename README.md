@@ -7,7 +7,7 @@ A visually enchanting web app where users click a magical crystal ball to reveal
 - Dark starry background with animated smoke
 - 25+ unique, random fortunes (wise, weird, funny, or creepy)
 - Sound effects and ambient background music
-- Optional voice output (speech synthesis)
+- Optional voice output 
 - Day/Night mode toggle
 - Fully responsive and visually engaging
 
